@@ -1,0 +1,8 @@
+pandas
+numpy
+scikit-learn
+flask
+flask_wtf
+wtforms
+pickle
+gunicorn
