@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title.upper() }}</title>
+</head>
+<body>
+    <h1>Welcome to {{ title.upper() }} page</h1>
+
+    {% with msgs = get_flashed_messages() %}
+        {% if msgs %}
+            {% for msg in msgs %}
+                <p>{{ msg }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>

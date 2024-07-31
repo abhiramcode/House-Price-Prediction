@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2> House Price Prediction </h2>
+
+<form action="" method="post">
+  {{ form.hidden_tag() }}
+  <div>
+    {{ form.area.label }}
+    {{ form.area }}
+    {% if form.area.errors %}
+      {% for error in form.area.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <br>
+  <div>
+    {{ form.bedrooms.label }}
+    {{ form.bedrooms }}
+    {% if form.bedrooms.errors %}
+      {% for error in form.bedrooms.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <br>
+  <div>
+    {{ form.resale.label }}
+    {{ form.resale }}
+    {% if form.resale.errors %}
+      {% for error in form.resale.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <br>
+  <div>
+    {{ form.indoor_luxury.label }}
+    {{ form.indoor_luxury }}
+    {% if form.indoor_luxury.errors %}
+      {% for error in form.indoor_luxury.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <br>
+  <div>
+    {{ form.outdoor_luxury.label }}
+    {{ form.outdoor_luxury }}
+    {% if form.outdoor_luxury.errors %}
+      {% for error in form.outdoor_luxury.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <br><div>
+    {{ form.location.label }}
+    {{ form.location }}
+    {% if form.location.errors %}
+      {% for error in form.location.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <br><div>
+    {{ form.submit() }}
+  </div>
+  <br>
+</form>
+
+<div>
+  {{ output }}
+</div>
+
+<div>
+  <ul>
+    <li><a href={{ url_for('home') }} >Home</a></li>
+  </ul>
+</div>
+
+{% endblock content %}

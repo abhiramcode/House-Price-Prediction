@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div>
+  <ul>
+    <li><a href={{ url_for('home') }} >Home</a></li>
+    <li><a href={{ url_for('predict') }} >Predict!!</a></li>
+  </ul>
+</div>
+
+{% endblock content %}
