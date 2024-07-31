@@ -55,7 +55,7 @@ def predict():
     prediction = prediction*1.05
     msg = f"The predicted price is {prediction:,.0f} INR"
   else :
-    msg = "Please provide valid Information"
+    msg = "Please provide above Information and click on Predict"
   return render_template( "predict.html", title="predict", form=input, output=msg )
 
 
