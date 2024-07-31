@@ -34,7 +34,7 @@ def predict_price(location, area, bhk, resale, il, ol):
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template( "home.html", title="home" )
+    return render_template( "home.html", title="house price prediction" )
 
 
 @app.route("/predict", methods=["GET", "POST"])
