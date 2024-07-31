@@ -52,6 +52,7 @@ def predict():
     # })
     prediction = predict_price(input.location.data, np.log1p(input.area.data), input.bedrooms.data, input.resale.data, input.indoor_luxury.data, input.outdoor_luxury.data)
     prediction = np.expm1(prediction)
+    prediction = prediction*1.05
     msg = f"The predicted price is {prediction:,.0f} INR"
   else :
     msg = "Please provide valid Information"
