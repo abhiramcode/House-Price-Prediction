@@ -1,14 +1,41 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='../static/styles/home.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="../static/styles/home.css"> -->
+    <!-- <title>{{ title.upper() }}</title> -->
+    <title>HOME</title>
+</head>
+<body>
 
-{% block content %}
+    <!-- {% with msgs = get_flashed_messages() %}
+        {% if msgs %}
+            {% for msg in msgs %}
+                <p>{{ msg }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %} -->
 
-<h1>Welcome to Hyderabad House Price Prediction Model</h1>
-<div>
-  <ul>
-<!--     <li><a href={{ url_for('home') }} >Home</a></li>
-    <br> -->
-    <li><a href={{ url_for('predict') }} >Click here to Predict!!</a></li>
-  </ul>
-</div>
+    <div class="login-wrap">
+      <div class="login-html">
+        <div class="groupb">
+          <button class="button" id="HomeButton">HOME</button>
+          <button class="button" id="PredictButton">PREDICT</button>
+        </div>
+      </div>
+    </div>
+      
+    <script type="text/javascript">
+      document.getElementById("HomeButton").onclick = function () {
+          location.href = "/home";
+      };
+      document.getElementById("PredictButton").onclick = function () {
+          location.href = "/predict";
+      };
+    </script>
 
-{% endblock content %}
+
+</body>
+</html>
