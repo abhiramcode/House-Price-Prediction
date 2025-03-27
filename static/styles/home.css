@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin:0;
+  font-family: 'Open Sans', sans-serif;
+  height: 100vh;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overscroll-behavior-y: contain;
+  background: #c1c1c1;
+}
+
+.login-wrap {
+  width: 100%;
+  margin: auto;
+  /* margin-top: 25px; */
+  max-width: 525px;
+  min-height: 670px;
+  position: relative;
+  background: url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg) no-repeat center;
+  box-shadow: 0px 12px 15px 0px rgba(0, 0, 0, 0.24), 0px 17px 50px 0px rgba(0, 0, 0, 0.19);
+}
+
+.login-html {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  /* align-items: center; */
+  padding: 40px 60px 50px 60px;
+  background: rgba(40, 57, 101, 0.9);
+}
+
+
+.groupb {
+  width: 75%;
+  /* max-width: fit-content; */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+
+  margin-top: 50%;
+  margin-inline: auto;
+
+}
+
+.groupb .button {
+  width: 100%;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  color: #fff;
+  background: #1161ee;
+  margin-top: 7px;
+}
+
+.button:hover {
+  transform: translateY(-3px);
+  transform: scale(1.03);
+  background: #0d00ff;
+ }
