@@ -1,83 +1,190 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>PREDICT</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/predict-gpt2-rem.css') }}">
+</head>
+<body>
+<div class="predict-container">
+    <div class="predict-overlay">
 
-{% block content %}
+        <!-- City Selector -->
+        <div class="radio-options">
+            <div class="radio-option radio-main">
+                <input type="radio" id="predict-main" name="rcity" value="0" {% if selected_city == '0' %}checked{% endif %}>
+                <label for="predict-main">PREDICT</label>
+            </div>
+        </div>
 
-<h1>Hyderabad House Price Prediction </h1>
+        <div class="city-selector">
+            <div class="city-row">
+                {% for city, val in [('hyderabad','1'), ('chennai','2'), ('bangalore','3')] %}
+                <div class="radio-option radio-city">
+                    <input type="radio" id="{{ city }}" name="rcity" value="{{ val }}" {% if selected_city == val %}checked{% endif %}>
+                    <label for="{{ city }}">{{ city.upper() }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="city-row">
+                {% for city, val in [('mumbai','4'), ('delhi','5'), ('kolkata','6')] %}
+                <div class="radio-option radio-city">
+                    <input type="radio" id="{{ city }}" name="rcity" value="{{ val }}" {% if selected_city == val %}checked{% endif %}>
+                    <label for="{{ city }}">{{ city.upper() }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
 
-<form action="" method="post">
-  {{ form.hidden_tag() }}
-  <div>
-    {{ form.area.label }}
-    {{ form.area }}
-    {% if form.area.errors %}
-      {% for error in form.area.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    {% endif %}
-  </div>
-  <br>
-  <div>
-    {{ form.bedrooms.label }}
-    {{ form.bedrooms }}
-    {% if form.bedrooms.errors %}
-      {% for error in form.bedrooms.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    {% endif %}
-  </div>
-  <br>
-  <div>
-    {{ form.resale.label }}
-    {{ form.resale }}
-    {% if form.resale.errors %}
-      {% for error in form.resale.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    {% endif %}
-  </div>
-  <br>
-  <div>
-    {{ form.indoor_luxury.label }}
-    {{ form.indoor_luxury }}
-    {% if form.indoor_luxury.errors %}
-      {% for error in form.indoor_luxury.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    {% endif %}
-  </div>
-  <br>
-  <div>
-    {{ form.outdoor_luxury.label }}
-    {{ form.outdoor_luxury }}
-    {% if form.outdoor_luxury.errors %}
-      {% for error in form.outdoor_luxury.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    {% endif %}
-  </div>
-  <br><div>
-    {{ form.location.label }}
-    {{ form.location }}
-    {% if form.location.errors %}
-      {% for error in form.location.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    {% endif %}
-  </div>
-  <br><div>
-    {{ form.submit() }}
-  </div>
-  <br>
-</form>
+        <!-- Forms -->
+        <div class="predict-form">
+            {% for val in ['1'] %}
+            <div class="form-section {% if selected_city == val %}active{% endif %}" id="form-{{ val }}">
+                <form method="post" action="/predict">
+                    <input type="hidden" name="rcity" value="{{ val }}">
+                    {{ formh.hidden_tag() }}
 
-<div>
-  {{ output }}
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            {{ formh.area.label(class="label") }}
+                            {{ formh.area(class="input", placeholder="Area in sqft") }}
+                        </div>
+                        <div class="form-group half-width">
+                            {{ formh.bedrooms.label(class="label") }}
+                            {{ formh.bedrooms(class="input", placeholder="No. of Bedrooms") }}
+                        </div>
+                        <div class="form-group half-width">
+                            {{ formh.resale.label(class="label") }}
+                            {{ formh.resale(class="input") }}
+                        </div>
+                        <div class="form-group half-width">
+                            {{ formh.indoor_luxury.label(class="label") }}
+                            {{ formh.indoor_luxury(class="input") }}
+                        </div>
+                        <div class="form-group half-width">
+                            {{ formh.outdoor_luxury.label(class="label") }}
+                            {{ formh.outdoor_luxury(class="input") }}
+                        </div>
+                        <div class="form-group full-width">
+                            {{ formh.location.label(class="label") }}
+                            {{ formh.location(class="input") }}
+                        </div>
+                        <div class="form-group button-container">
+                            <button type="submit" name="submit" class="button">Predict</button>
+                        </div>
+                        <div class="hr"></div>
+                        <div class="form-note">{{ output }}</div>
+                        <div class="hr2"></div>
+                    </div>
+                </form>
+            </div>
+            {% endfor %}
+
+            {% for val in ['0','2','3','4','5','6'] %}
+            <div class="form-section {% if selected_city == val %}active{% endif %}" id="form-{{ val }}">
+                <!-- <form method="post" action="/predict">
+                    <input type="hidden" name="rcity" value="{{ val }}">
+                    {{ formh.hidden_tag() }}
+
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            {{ formh.area.label(class="label") }}
+                            {{ formh.area(class="input", placeholder="Area in sqft") }}
+                        </div>
+                        <div class="form-group half-width">
+                            {{ formh.bedrooms.label(class="label") }}
+                            {{ formh.bedrooms(class="input", placeholder="No. of Bedrooms") }}
+                        </div>
+                        <div class="form-group half-width">
+                            {{ formh.resale.label(class="label") }}
+                            {{ formh.resale(class="input") }}
+                        </div>
+                        <div class="form-group half-width">
+                            {{ formh.indoor_luxury.label(class="label") }}
+                            {{ formh.indoor_luxury(class="input") }}
+                        </div>
+                        <div class="form-group half-width">
+                            {{ formh.outdoor_luxury.label(class="label") }}
+                            {{ formh.outdoor_luxury(class="input") }}
+                        </div>
+                        <div class="form-group full-width">
+                            {{ formh.location.label(class="label") }}
+                            {{ formh.location(class="input") }}
+                        </div>
+                        <div class="form-group button-container">
+                            <button type="submit" name="submit" class="button">Predict</button>
+                        </div>
+                        <div class="hr"></div>
+                        <div class="form-note">{{ output }}</div>
+                        <div class="hr2"></div>
+                    </div>
+                </form> -->
+                <div class="coming-soon">COMING SOON</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 
-<div>
-  <ul>
-    <li><a href={{ url_for('home') }} >Return back to Home?</a></li>
-  </ul>
+<div id="loader" style="display:none;">
+    <div class="spinner"></div>
 </div>
 
-{% endblock content %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const radioButtons = document.querySelectorAll('input[name="rcity"]');
+        const formSections = document.querySelectorAll('.form-section');
+    
+        // Handle radio switching (AJAX city tab)
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', () => {
+                const selectedVal = radio.value;
+                formSections.forEach(section => section.classList.remove('active'));
+                const activeForm = document.getElementById(`form-${selectedVal}`);
+                if (activeForm) activeForm.classList.add('active');
+    
+                fetch("/set_city", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: `rcity=${selectedVal}`
+                }).then(response => response.json())
+                  .then(data => {
+                      console.log("City state set:", data.selected_city);
+                  });
+            });
+        });
+    
+        // Handle form prediction AJAX
+        document.querySelectorAll("form").forEach(form => {
+            form.addEventListener("submit", e => {
+                e.preventDefault();
+                const formData = new FormData(form);
+                const outputDiv = form.querySelector(".form-note");
+    
+                // Show spinner
+                document.getElementById("loader").style.display = "flex";
+    
+                fetch("/predict", {
+                    method: "POST",
+                    body: formData,
+                    headers: { "X-Requested-With": "XMLHttpRequest" }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    outputDiv.innerText = data.prediction || "No response";
+                })
+                .catch(err => {
+                    console.error(err);
+                    outputDiv.innerText = "Something went wrong";
+                })
+                .finally(() => {
+                    document.getElementById("loader").style.display = "none";
+                });
+            });
+        });
+    });
+    </script>
+
+</body>
+</html>
