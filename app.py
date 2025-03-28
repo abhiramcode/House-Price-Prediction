@@ -98,8 +98,8 @@ def predict():
 
     # Normal GET or fallback
     return render_template(
-        "predict-gpt-ajax-v1.html",
-        title="predict",
+        "predict.html",
+        title="Predict",
         formr=radio_form,
         formp=predict_form,
         formh=hyd_form,
