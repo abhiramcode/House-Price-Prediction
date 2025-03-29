@@ -1,18 +1,6 @@
 import pickle
 import locale
 # locale.setlocale(locale.LC_ALL, 'en_IN')
-# Attempt to set the locale to en_IN
-try:
-    locale.setlocale(locale.LC_ALL, 'en_IN')  # Try the full locale name first
-except locale.Error:
-    try:
-        locale.setlocale(locale.LC_ALL, 'en_IN.utf8') # try with utf8 encoding
-    except locale.Error:
-        try:
-           locale.setlocale(locale.LC_ALL, 'en') # try the language, without region.
-        except locale.Error:
-            print("Locale en_IN not supported on this system. Setting default to system locale")
-            locale.setlocale(locale.LC_ALL, '') # default to system locale.
 
 import json
 import numpy as np
@@ -30,6 +18,23 @@ app.config["SECRET_KEY"] = "this_is_abhi_secret_key"
 with open("./columns.json", "r") as f:
     columns = json.load(f)["data_columns"]
     locations = columns[5:]
+
+def format_inr(number):
+    number = int(round(number))
+    s = str(number)[::-1]
+    parts = []
+
+    # First 3 digits
+    parts.append(s[:3])
+    s = s[3:]
+
+    # Rest in chunks of 2
+    while s:
+        parts.append(s[:2])
+        s = s[2:]
+
+    formatted = ','.join(parts)[::-1]
+    return formatted
 
 def predict_price(location, area, bhk, resale, il, ol):
     try:
@@ -77,8 +82,6 @@ def predict():
                 outdoor_luxury = request.form.get('outdoor_luxury')
                 location = request.form.get('location')
 
-                print(area, bedrooms, resale, indoor_luxury, outdoor_luxury, location)
-
                 # model = load_model(selected_city)
                 prediction = predict_price(
                     location,
@@ -88,12 +91,11 @@ def predict():
                     indoor_luxury,
                     outdoor_luxury
                 )
-                print(prediction)
 
                 if prediction is not None:
                     prediction = np.expm1(prediction) * 1.05
-                    print(prediction)
-                    prediction_msg = f"The predicted price of the house is {locale.format_string('%d', prediction, grouping=True)} INR"
+                    prediction = format_inr(prediction)
+                    prediction_msg = f"The predicted price of the house is {prediction} INR"
                 else:
                     prediction_msg = "Error in prediction. Please try again."
             else:
