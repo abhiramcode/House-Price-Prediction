@@ -1,7 +1,20 @@
 import pickle
 import locale
+# locale.setlocale(locale.LC_ALL, 'en_IN')
+# Attempt to set the locale to en_IN
+try:
+    locale.setlocale(locale.LC_ALL, 'en_IN')  # Try the full locale name first
+except locale.Error:
+    try:
+        locale.setlocale(locale.LC_ALL, 'en_IN.utf8') # try with utf8 encoding
+    except locale.Error:
+        try:
+           locale.setlocale(locale.LC_ALL, 'en') # try the language, without region.
+        except locale.Error:
+            print("Locale en_IN not supported on this system. Setting default to system locale")
+            locale.setlocale(locale.LC_ALL, '') # default to system locale.
+
 import json
-locale.setlocale(locale.LC_ALL, 'en_IN')
 import numpy as np
 from flask import Flask, render_template, request, flash, jsonify
 from forms import RadioForm, PredictForm, HydForm
